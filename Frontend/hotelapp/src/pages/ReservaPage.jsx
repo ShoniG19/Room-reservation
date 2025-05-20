@@ -8,6 +8,9 @@ import HabitacionesGrid from "../components/HabitacionesGrid";
 import Modal from "../components/Modal";
 
 import obtenerFechasHoyYManana from "../utils/obtenerFecha";
+import { toast } from "react-hot-toast";
+import { Loader } from "lucide-react";
+
 
 const ReservaPage = () => {
   const [form, setForm] = useState({
@@ -29,6 +32,7 @@ const ReservaPage = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(9);
+  const [cargandoReserva, setCargandoReserva] = useState(false);
 
   
   useEffect(() => {
@@ -39,7 +43,6 @@ const ReservaPage = () => {
         const {total, data} = await buscarHabitaciones(fechas, page, pageSize);
         setHabitaciones(data);
         setTotal(total);
-        console.log(data)
       } catch (err) {
         console.error("Error al cargar habitaciones por defecto", err);
       }
@@ -68,6 +71,7 @@ const ReservaPage = () => {
   };
 
   const handleReservar = async () => {
+    setCargandoReserva(true);
     const payload = {
       fechaIngreso: form.fechaIngreso,
       fechaSalida: form.fechaSalida,
@@ -82,14 +86,16 @@ const ReservaPage = () => {
     try {
       await crearReserva(payload);
       setShowResumenModal(false);
-      alert("Reserva realizada con éxito");
+      toast.success("Reserva realizada con éxito");
       setSeleccionada(null);
       setMostrarBotonReserva(false);
       setCliente({ cedula: "", nombre: "", apellido: "" });
       setClienteConfirmado(false);
       setForm({ fechaIngreso: "", fechaSalida: "", capacidad: "" });
     } catch (err) {
-      alert("Error al realizar la reserva");
+      toast.error("Error al realizar la reserva");
+    } finally {
+      setCargandoReserva(false);
     }
   };
 
@@ -178,9 +184,17 @@ const ReservaPage = () => {
 
         <button
           onClick={handleReservar}
+          disabled={cargandoReserva}
           className="mt-4 w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
         >
-          Confirmar
+          {cargandoReserva ? (
+            <div className="flex items-center justify-center">
+            <Loader className="animate-spin w-5 h-5 text-white mr-2" />
+              Procesando...
+            </div>
+          ) : (
+            "Confirmar"
+          )}
         </button>
       </Modal>
     </>

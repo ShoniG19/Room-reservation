@@ -33,3 +33,7 @@ const PORT = process.env.PORT || 9891;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}.`);
 });
+
+// Actualizar estado de habitaciones
+const actualizarEstadoHabitaciones = require("./app/utils/estadoUpdater");
+actualizarEstadoHabitaciones()

@@ -36,7 +36,6 @@ const ListadoPage = () => {
   }, [pageSize]);
 
   const buscar = async (pagina = 0) => {
-    console.log("pagina",pagina)
     try {
       const {data,total} = await getReservasConFiltros(filtros, pagina, pageSize);
       setReservas(data);
