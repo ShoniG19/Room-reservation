@@ -23,9 +23,9 @@ exports.create = (req, res) => {
     };  
 
 // Traer todas las habitaciones
-exports.findAll = (req, res) => {
+exports.findAll = async (req, res) => {
   try{
-    const habitaciones = Habitacion.findAll();
+    const habitaciones = await Habitacion.findAll();
     res.send(habitaciones);
   }catch (err) {
     res.status(500).send({

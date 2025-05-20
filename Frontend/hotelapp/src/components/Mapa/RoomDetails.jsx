@@ -1,6 +1,21 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const RoomDetails = ({ room, hotel }) => {
+  const navigate = useNavigate();
+
+  const handleReservar = () => {
+    navigate("/", {
+      state: {
+        habitacion: {
+          ...room,
+          Hotel: hotel, 
+        },
+      },
+    });
+  };
+
   let color = "text-black"
   switch(room.estado){
     case "disponible":
@@ -15,6 +30,9 @@ const RoomDetails = ({ room, hotel }) => {
     case "mantenimiento":
       color = "text-yellow-500";
       break;
+    default:
+      color = "text-black";
+      break;
   }
   return (
     <div className="bg-white border rounded p-4 shadow text-sm">
@@ -25,6 +43,13 @@ const RoomDetails = ({ room, hotel }) => {
       <p><strong>Piso:</strong> {room.piso}</p>
       <p><strong>Capacidad:</strong> {room.capacidad} personas</p>
       <p><strong>Características:</strong> {room.caracteristicas || room.features?.join(", ")}</p>
+      {room.estado === "disponible" && (
+        <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+        onClick={handleReservar}
+        >
+          Reservar
+        </button>
+      )}
     </div>
   );
 };
