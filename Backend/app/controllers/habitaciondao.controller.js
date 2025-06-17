@@ -25,7 +25,9 @@ exports.create = (req, res) => {
 // Traer todas las habitaciones
 exports.findAll = async (req, res) => {
   try{
-    const habitaciones = await Habitacion.findAll();
+    const habitaciones = await Habitacion.findAll({
+      order:[['id', 'ASC']],
+    });
     res.send(habitaciones);
   }catch (err) {
     res.status(500).send({

@@ -1,11 +1,9 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:9891/api/hotel";
+import api from '../utils/api';
 
 // Traer listado de hoteles
 export const getListadoHotel = async () => {
   try {
-    const response = await axios.get(`${API_URL}`);
+    const response = await api.get(`/hotel`);
     return response.data;
   } catch (err) {
     
@@ -19,7 +17,7 @@ export const getListadoHotel = async () => {
 //Traer listado de hoteles con cantidad de habitaciones 
 export const getListadoHotelconCantidad = async () => {
   try {
-    const response = await axios.get(`${API_URL}/habitaciones`);
+    const response = await api.get(`/hotel/habitaciones`);
     return response.data;
   } catch (err) {
     
