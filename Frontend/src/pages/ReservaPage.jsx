@@ -57,11 +57,9 @@ const ReservaPage = () => {
   }, [page]);
 
   useEffect(() => {
-    // Si venís desde el mapa con una habitación seleccionada
     if (location.state?.habitacion) {
       setSeleccionada(location.state.habitacion);
 
-      // Opcional: poner fechas por defecto si no hay
       if (!form.fechaIngreso || !form.fechaSalida) {
         const fechas = obtenerFechasHoyYManana();
         setForm({
