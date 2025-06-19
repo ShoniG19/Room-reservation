@@ -6,6 +6,7 @@ const ReservaForm = ({ form, setForm, onBuscar }) => {
   useEffect(() => {
     const fetchData = async () => {
       const hotelesData = await getListadoHotel();
+      console.log(hotelesData)
       setHoteles(hotelesData);
     };
     fetchData();
