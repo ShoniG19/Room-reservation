@@ -15,7 +15,7 @@ export const getClientePorCedula = async (cedula) => {
 };
 
 export const crearCliente = async (cliente) => {
-  const response = await axios.post(`${API_URL}`, cliente);
+  const response = await api.post(`/cliente`, cliente);
   return response.data;
 };
 
